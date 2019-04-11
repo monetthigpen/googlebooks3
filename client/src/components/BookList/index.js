@@ -32,7 +32,7 @@ export function BookListItem({
               Go to Book!
             </a>
             <br></br>
-            <button type="button" className="btn btn-outline-primary" id="save"> Save</button>
+            <button type="button" className="btn btn-outline-primary"  id="save"> Save</button>
           </Col>
         </Row>
       </Container>
