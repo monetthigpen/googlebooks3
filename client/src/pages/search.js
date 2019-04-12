@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Jumbotron from "../components/Jumbotron";
 // import Nav from "../components/Nav";
-import Input from "../components/Input";
-import Button from "../components/Button";
+// import Input from "../components/Input";
+import SearchForm from "../components/SearchForm";
+// import Button from "../components/Button";
 import API from "../utils/API";
 import { BookList, BookListItem } from "../components/BookList";
 import { Container, Row, Col } from "../components/Grid";
@@ -13,22 +14,40 @@ class SearchBooks extends Component {
     saved: false,
     bookSearch: ""
   };
-
+  componentDidMount() {
+    this.searchBooks("1984");
+  }
+  // handleInputChange = event => {
+  //   // Destructure the name and value properties off of event.target
+  //   // Update the appropriate state
+  //   const { name, value } = event.target;
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // };
+  searchBooks = query => {
+    API.search(query)
+      .then(res => this.setState({ result: res.data }))
+      .catch(err => console.log(err));
+  };
   handleInputChange = event => {
-    // Destructure the name and value properties off of event.target
-    // Update the appropriate state
-    const { name, value } = event.target;
+    const value = event.target.value;
+    const name = event.target.name;
     this.setState({
       [name]: value
     });
   };
 
+  // handleFormSubmit = event => {
+  //   // When the form is submitted, prevent its default behavior, get recipes update the recipes state
+  //   event.preventDefault();
+  //   API.searchBooks(this.state.bookSearch)
+  //     .then(res => this.setState({ books: res.data }))
+  //     .catch(err => console.log(err));
+  // };
   handleFormSubmit = event => {
-    // When the form is submitted, prevent its default behavior, get recipes update the recipes state
     event.preventDefault();
-    API.searchBooks(this.state.bookSearch)
-      .then(res => this.setState({ books: res.data }))
-      .catch(err => console.log(err));
+    this.searchBooks(this.state.search);
   };
   handleSaveClick = function(event) {
     this.setState({saved: true});
@@ -59,10 +78,10 @@ class SearchBooks extends Component {
         <Container>
           <Row>
             <Col size="md-12">
-              <form>
+              
                 <Container>
                   <Row>
-                    <Col size="xs-9 sm-10">
+                    {/* <Col size="xs-9 sm-10">
                       <Input
                         name="bookSearch"
                         value={this.state.bookSearch}
@@ -78,10 +97,13 @@ class SearchBooks extends Component {
                       >
                         Search
                       </Button>
-                    </Col>
+                    </Col> */}
+                    <SearchForm>
+
+                    </SearchForm>
                   </Row>
                 </Container>
-              </form>
+              
             </Col>
           </Row>
           <Row>
